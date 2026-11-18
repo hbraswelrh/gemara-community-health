@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gemara Community Health Report — November 2026</title>
+<style>
+  :root {
+    --page:      #f9f9f7;
+    --surface:   #fcfcfb;
+    --ink:       #0b0b0b;
+    --ink-2:     #52514e;
+    --muted:     #898781;
+    --rule:      #e1e0d9;
+    --border:    rgba(11,11,11,0.10);
+    --accent:    #2a78d6;
+    --good:      #0ca30c;
+    --warning:   #fab219;
+    --serious:   #ec835a;
+    --critical:  #d03b3b;
+    --wash:      rgba(42,120,214,0.06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      --page:    #0d0d0d;
+      --surface: #1a1a19;
+      --ink:     #f0efec;
+      --ink-2:   #c3c2b7;
+      --muted:   #898781;
+      --rule:    #2c2c2a;
+      --border:  rgba(255,255,255,0.10);
+      --accent:  #3987e5;
+      --wash:    rgba(57,135,229,0.10);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page:    #0d0d0d;
+    --surface: #1a1a19;
+    --ink:     #f0efec;
+    --ink-2:   #c3c2b7;
+    --muted:   #898781;
+    --rule:    #2c2c2a;
+    --border:  rgba(255,255,255,0.10);
+    --accent:  #3987e5;
+    --wash:    rgba(57,135,229,0.10);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 56rem; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  /* ---------- masthead ---------- */
+  header.masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.25rem; margin-bottom: 2rem; }
+  .eyebrow { font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 .5rem; }
+  h1 { font-size: 2.1rem; line-height: 1.15; margin: 0 0 .75rem; letter-spacing: -0.02em; }
+  .meta { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; font-size: .85rem; color: var(--ink-2); margin: 0; }
+  .meta span { white-space: nowrap; }
+  .meta b { font-weight: 600; color: var(--ink); }
+
+  /* ---------- verdict ---------- */
+  .verdict {
+    background: var(--wash);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.75rem;
+    font-size: 1.15rem;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  /* ---------- stat tiles ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: .75rem; margin-bottom: 1.75rem; }
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .95rem 1rem 1rem;
+    display: flex; flex-direction: column; gap: .3rem;
+  }
+  .tile .label { font-size: .78rem; color: var(--ink-2); font-weight: 600; line-height: 1.3; }
+  .tile .value { font-size: 2rem; font-weight: 650; line-height: 1.05; letter-spacing: -0.02em; }
+  .tile .value small { font-size: .95rem; font-weight: 600; color: var(--ink-2); letter-spacing: 0; }
+  .tile .note { font-size: .8rem; color: var(--ink-2); line-height: 1.35; }
+  .chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); }
+  .chip::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: var(--muted); flex: none; }
+  .chip.good::before     { background: var(--good); }
+  .chip.warning::before  { background: var(--warning); }
+  .chip.serious::before  { background: var(--serious); }
+  .chip.critical::before { background: var(--critical); }
+
+  /* ---------- asks ---------- */
+  .asks { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.35rem 1.2rem; margin-bottom: 1rem; }
+  .asks h2 { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 .65rem; border: 0; padding: 0; }
+  .asks ol { margin: 0; padding-left: 1.2rem; }
+  .asks li { margin-bottom: .45rem; }
+  .asks li:last-child { margin-bottom: 0; }
+
+  /* ---------- structure ---------- */
+  h2 { font-size: 1.3rem; margin: 2.75rem 0 .85rem; padding-bottom: .35rem; border-bottom: 1px solid var(--rule); letter-spacing: -0.01em; }
+  h2 .num { color: var(--muted); font-weight: 600; margin-right: .45rem; }
+  h3 { font-size: 1rem; margin: 1.5rem 0 .6rem; color: var(--ink); }
+  p { margin: 0 0 .9rem; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  strong { font-weight: 650; }
+  ul { margin: 0 0 .9rem; padding-left: 1.2rem; }
+  li { margin-bottom: .35rem; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .875em; background: var(--wash); padding: .1em .35em; border-radius: 3px; }
+
+  /* ---------- tables ---------- */
+  .scroll { overflow-x: auto; margin: 0 0 1.25rem; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: .88rem; background: var(--surface); }
+  caption { caption-side: top; text-align: left; font-size: .8rem; color: var(--muted); padding-bottom: .4rem; }
+  th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  thead th { font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--ink-2); white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tbody tr:hover { background: var(--wash); }
+
+  /* ---------- callout ---------- */
+  .callout { border-left: 3px solid var(--rule); padding: .1rem 0 .1rem 1rem; margin: 0 0 1.25rem; color: var(--ink-2); }
+  .callout strong { color: var(--ink); }
+
+  /* ---------- details ---------- */
+  details { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); margin: 0 0 1.25rem; }
+  details > summary {
+    cursor: pointer; padding: .7rem 1rem; font-size: .85rem; font-weight: 650; color: var(--ink-2);
+    list-style: none; display: flex; align-items: center; gap: .5rem;
+  }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::before { content: "▸"; color: var(--muted); font-size: .8rem; }
+  details[open] > summary::before { content: "▾"; }
+  details[open] > summary { border-bottom: 1px solid var(--rule); }
+  .details-body { padding: 1rem; }
+  .details-body > :last-child { margin-bottom: 0; }
+  .details-body .scroll { margin-bottom: 0; }
+  details table { background: transparent; }
+
+  /* ---------- recs ---------- */
+  .rec-group { margin-bottom: 1.5rem; }
+  .rec-group h3 { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .5rem; }
+  .rec-group h3 .when { font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: var(--ink); padding: .18rem .5rem; border-radius: 4px; font-weight: 700; }
+  :root[data-theme="dark"] .rec-group h3 .when,
+  :root:where(:not([data-theme="light"])) .rec-group h3 .when { color: #0d0d0d; }
+  @media (prefers-color-scheme: light) { :root:where(:not([data-theme="dark"])) .rec-group h3 .when { color: #fff; } }
+  .rec-group ol { margin: 0; padding-left: 1.4rem; }
+  .rec-group li { margin-bottom: .4rem; }
+
+  footer.colophon { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+
+  /* ---------- theme toggle ---------- */
+  .toggle {
+    position: fixed; top: 1rem; right: 1rem; z-index: 10;
+    background: var(--surface); color: var(--ink-2); border: 1px solid var(--border);
+    border-radius: 999px; padding: .35rem .8rem; font: inherit; font-size: .78rem; font-weight: 600;
+    cursor: pointer;
+  }
+  .toggle:hover { color: var(--ink); }
+
+  /* ---------- print ---------- */
+  @media print {
+    :root { --page:#fff; --surface:#fff; --ink:#000; --ink-2:#333; --rule:#ccc; --border:#ccc; --wash:#f4f4f2; }
+    .toggle { display: none; }
+    .wrap { max-width: none; padding: 0; }
+    details { border: 0; }
+    details > summary { display: none; }
+    .details-body { padding: 0; }
+    h2 { break-after: avoid; }
+    table, .tile, .asks { break-inside: avoid; }
+    a { color: #000; }
+  }
+</style>
+</head>
+<body>
+<button class="toggle" id="themeToggle" type="button" aria-label="Toggle colour theme">Dark</button>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">OpenSSF · Community Health Report</p>
+  <h1>Gemara Community Health Report</h1>
+  <p class="meta">
+    <span><b>Window:</b> 2026-08-19 → 2026-11-17 (90 days)</span>
+    <span><b>Scope:</b> 14 active <code>gemaraproj</code> repos</span>
+    <span><b>Source:</b> GitHub REST + GraphQL, pulled 2026-11-17</span>
+  </p>
+</header>
+
+<p class="verdict">Gemara is growing fast on intake and lagging on response. The bottleneck is maintainer throughput, not interest.</p>
+
+<section class="tiles" aria-label="Key signals">
+  <div class="tile">
+    <span class="label">New contributors (first-ever merged PR)</span>
+    <span class="value">12 <small>in 90d</small></span>
+    <span class="chip good">Strength</span>
+    <span class="note">7 in the last 30 days. 39% of all 31 all-time contributors arrived this quarter.</span>
+  </div>
+  <div class="tile">
+    <span class="label">Issues with no human reply</span>
+    <span class="value">60%</span>
+    <span class="chip critical">Critical</span>
+    <span class="note">57 of 95 issues. Median first response <b>8.3 days</b>.</span>
+  </div>
+  <div class="tile">
+    <span class="label">Review concentration</span>
+    <span class="value">82% <small>by 3 people</small></span>
+    <span class="chip serious">Serious</span>
+    <span class="note">Bus factor of 3 across the whole org.</span>
+  </div>
+  <div class="tile">
+    <span class="label">External spec adopters</span>
+    <span class="value">4 <small>CNCF / OpenSSF</small></span>
+    <span class="chip good">Strength</span>
+    <span class="note">CloudNativePG, wasmCloud, Capsule, Scorecard — reach beyond the GRC orbit, currently unmeasured.</span>
+  </div>
+  <div class="tile">
+    <span class="label">On-ramp supply</span>
+    <span class="value">5 <small>good first issues</small></span>
+    <span class="chip warning">Warning</span>
+    <span class="note">Zero repos have GitHub topics set — the org is undiscoverable by topic search.</span>
+  </div>
+</section>
+
+<p class="callout"><strong>The shape of the problem:</strong> if you already know what to build, Gemara merges your work in ~19 hours. If you arrive with a question, you are ignored for over a week. That filters out exactly the newcomers the project wants.</p>
+
+<div class="asks">
+  <h2>Three asks of leadership</h2>
+  <ol>
+    <li><strong>Maintainer capacity</strong> — promote 5 already-active volunteer reviewers up the contributor ladder with scoped merge rights.</li>
+    <li><strong>LFX Insights coverage</strong> — Insights tracks 1 of 14 repos, under the stale <code>ossf/gemara</code> name. Needs an LF ticket.</li>
+    <li><strong>Adoption narrative</strong> — four CNCF/OpenSSF projects adopt the spec without the SDK. This is the strongest proof point in the report, and it is neither tracked nor published.</li>
+  </ol>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2><span class="num">1</span>Scale and activity</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Metric (90 days)</th><th class="n">Value</th></tr></thead>
+  <tbody>
+    <tr><td>PRs merged</td><td class="n">267 &nbsp;<small>(161 human / 106 Dependabot)</small></td></tr>
+    <tr><td>Unique human PR authors</td><td class="n">19</td></tr>
+    <tr><td><strong>New contributors</strong></td><td class="n"><strong>12</strong></td></tr>
+    <tr><td>Issues opened / closed</td><td class="n">95 / 62 &nbsp;<strong>(net −33)</strong></td></tr>
+    <tr><td>Open backlog</td><td class="n">91 issues, 83 PRs</td></tr>
+    <tr><td>All-time human contributors</td><td class="n">31</td></tr>
+    <tr><td>Releases, all time</td><td class="n">62 across 5 repos</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Backlog is growing</strong> and concentrated: <code>gemara</code> (39 open PRs) and <code>website</code> (19) hold <strong>70% of all open PRs</strong>. <code>website</code> has more open PRs than open issues — contributions arriving faster than review.</p>
+
+<p>Forks, not stars, are the activity signal: <code>gemara</code> 31, <code>go-gemara</code> 18, <code>gemara-mcp</code> 11, <code>website</code> 11.</p>
+
+<details>
+  <summary>Per-repository detail — 14 repos</summary>
+  <div class="details-body">
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Repo</th><th class="n">Forks</th><th class="n">PRs merged 90d (human)</th><th class="n">Human authors</th><th class="n">Open issues</th><th class="n">Open PRs</th><th class="n">Releases</th></tr></thead>
+    <tbody>
+      <tr><td>gemara</td><td class="n">31</td><td class="n">67 (51)</td><td class="n">11</td><td class="n">34</td><td class="n">39</td><td class="n">30</td></tr>
+      <tr><td>website</td><td class="n">11</td><td class="n">26 (25)</td><td class="n">7</td><td class="n">8</td><td class="n">19</td><td class="n">0</td></tr>
+      <tr><td>go-gemara</td><td class="n">18</td><td class="n">28 (14)</td><td class="n">7</td><td class="n">15</td><td class="n">6</td><td class="n">19</td></tr>
+      <tr><td>gemara-react</td><td class="n">2</td><td class="n">29 (13)</td><td class="n">2</td><td class="n">0</td><td class="n">6</td><td class="n">0</td></tr>
+      <tr><td>gemara-mcp</td><td class="n">11</td><td class="n">32 (10)</td><td class="n">3</td><td class="n">3</td><td class="n">5</td><td class="n">7</td></tr>
+      <tr><td>grcli</td><td class="n">2</td><td class="n">9 (9)</td><td class="n">3</td><td class="n">3</td><td class="n">0</td><td class="n">0</td></tr>
+      <tr><td>gemara-publish-action</td><td class="n">4</td><td class="n">25 (6)</td><td class="n">2</td><td class="n">4</td><td class="n">1</td><td class="n">5</td></tr>
+      <tr><td>.github</td><td class="n">2</td><td class="n">8 (8)</td><td class="n">3</td><td class="n">1</td><td class="n">0</td><td class="n">—</td></tr>
+      <tr><td>community</td><td class="n">1</td><td class="n">7 (7)</td><td class="n">2</td><td class="n">11</td><td class="n">1</td><td class="n">—</td></tr>
+      <tr><td>gemara-ai</td><td class="n">6</td><td class="n">6 (6)</td><td class="n">2</td><td class="n">6</td><td class="n">3</td><td class="n">0</td></tr>
+      <tr><td>gemara-python</td><td class="n">4</td><td class="n">22 (4)</td><td class="n">2</td><td class="n">1</td><td class="n">2</td><td class="n">1</td></tr>
+      <tr><td>grc-store-clientkit</td><td class="n">0</td><td class="n">3 (3)</td><td class="n">2</td><td class="n">5</td><td class="n">0</td><td class="n">0</td></tr>
+      <tr><td>awesome-gemara</td><td class="n">3</td><td class="n">3 (3)</td><td class="n">2</td><td class="n">0</td><td class="n">0</td><td class="n">—</td></tr>
+      <tr><td>gemara-mcp-eval-infra</td><td class="n">3</td><td class="n">2 (2)</td><td class="n">1</td><td class="n">0</td><td class="n">1</td><td class="n">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</details>
+
+<!-- ============ 2 ============ -->
+<h2><span class="num">2</span>New contributors — the strongest signal</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Period</th><th class="n">New contributors</th></tr></thead>
+  <tbody>
+    <tr><td>2025 (full year)</td><td class="n">12</td></tr>
+    <tr><td>2026 Jan – Aug 18</td><td class="n">7</td></tr>
+    <tr><td><strong>2026 Aug 19 – Nov 17</strong></td><td class="n"><strong>12</strong> <small>(7 in last 30d)</small></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Several are already reviewing and triaging, not just submitting</strong> — <code>nameetsinha7-hue</code> (7 reviews), <code>YAshhh29</code> (6 reviews), <code>harshsomankar123-tech</code> (6 issue first-responses), <code>imshubham22apr-gif</code> (3). The on-ramp is producing participants, not drive-bys.</p>
+
+<p class="callout"><strong>Retention risk:</strong> the cohort's work is concentrated in <code>gemara</code> and <code>website</code> — the same two repos holding the 58-deep PR backlog. If it stalls there, the cohort evaporates.</p>
+
+<details>
+  <summary>90-day cohort, by first merge date</summary>
+  <div class="details-body">
+    <p><code>PaarthPandey10</code> (09-10) · <code>astrogilda</code> (09-15) · <code>gxmiranda</code> (09-30) · <code>kocaemre</code> (10-02) · <code>vansh-nagar</code> (10-05) · <code>jor2</code> (10-24) · <code>YAshhh29</code> (10-25) · <code>harshsomankar123-tech</code> (10-28) · <code>nameetsinha7-hue</code> (10-29) · <code>ravindra-RKB</code> (10-30) · <code>yvonnedevlinrh</code> (11-07) · <code>imshubham22apr-gif</code> (11-10)</p>
+  </div>
+</details>
+
+<!-- ============ 3 ============ -->
+<h2><span class="num">3</span>Maintainer load and bus factor</h2>
+
+<p><strong>Top 3 reviewers = 82% of all human reviews:</strong> <code>jpower432</code> (74, 50%), <code>jmeridth</code> (29, 20%), <code>eddie-knight</code> (19, 13%). Bots (<code>coderabbitai</code> 15, Copilot 3) supplement but don't substitute.</p>
+
+<p><code>jmeridth</code> authored merged PRs in <strong>all 14 repos</strong> — the only person with org-wide coverage, and a single point of failure for cross-repo maintenance.</p>
+
+<p>Of 8 GitHub org members, <strong>3 did not review a PR in 90 days</strong>. 27% of merged PRs (39 of 143) had no human review — mostly bot/chore, worth confirming none were substantive.</p>
+
+<!-- ============ 4 ============ -->
+<h2><span class="num">4</span>Responsiveness — the weakest area</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Issues opened, last 90 days</th><th class="n">Value</th></tr></thead>
+  <tbody>
+    <tr><td>Opened</td><td class="n">95</td></tr>
+    <tr><td><strong>No human response yet</strong></td><td class="n"><strong>57 (60%)</strong></td></tr>
+    <tr><td>Median time to first human response</td><td class="n"><strong>8.3 days</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><code>gemara</code> itself is reasonable (~2 days). Everywhere else a newcomer filing an issue should expect silence: <code>go-gemara</code> <strong>29 days</strong>, <code>community</code> <strong>60 days</strong>, <code>grcli</code> 13 days, <code>website</code> 7.5 days.</p>
+
+<p><strong>Time to merge is far better</strong> — median <strong>19.4h</strong> across non-bot PRs, with most repos under 3h. The contrast is the finding: fast merges, slow answers.</p>
+
+<!-- ============ 5 ============ -->
+<h2><span class="num">5</span>Ease of entry</h2>
+
+<h3>Cheapest fixes available</h3>
+<ul>
+  <li><strong>Zero repos have GitHub topics.</strong> Nothing is discoverable by searching <code>grc</code>, <code>compliance</code>, <code>policy-as-code</code>, <code>supply-chain</code>. Minutes of work.</li>
+  <li><strong>Only 5 open <code>good first issue</code>s</strong> org-wide (11 <code>help wanted</code>) — and <strong>none in <code>gemara</code></strong>, the flagship with 31 forks.</li>
+  <li><code>website</code> — 11 forks, 19 open PRs, <strong>no CONTRIBUTING.md and no license</strong>. Most contributor-facing repo, least documented.</li>
+  <li>No description on <code>gemara-react</code>, <code>gemara-python</code>, <code>community</code>. Issue templates on only 4 of 14 repos.</li>
+  <li>Discussions enabled on <code>gemara-mcp</code> only — questions have nowhere to go but unanswered issues.</li>
+  <li><code>gemara-mcp-eval-infra</code> license reads <code>NOASSERTION</code> — blocks adopter legal review.</li>
+</ul>
+
+<p><strong>Org-level governance is in good shape</strong> (<code>CODE_OF_CONDUCT</code>, <code>GOVERNANCE</code>, <code>CHARTER</code>, <code>MAINTAINERS</code>, <code>CONTRIBUTOR_LADDER</code>, <code>SECURITY</code> all inherited from <code>.github</code>). The gap is per-repo.</p>
+
+<p class="callout"><strong>Dogfooding gap:</strong> <code>security-insights.yml</code> is present in <strong>7 of 14 repos</strong>. For a project pitching structured security metadata, 50% self-coverage is a credibility gap — and an easy <code>good first issue</code> batch.</p>
+
+<!-- ============ 6 ============ -->
+<h2><span class="num">6</span>Adoption — two tracks</h2>
+
+<p><strong>SDK adoption (Go dependency graph):</strong> 25 external repos import <code>go-gemara</code>, but concentrated in the home orbit — ComplyTime, Privateer, revanite-io, OpenSSF. The genuinely independent adopters are <code>IBM/ai-security-baseline</code>, <code>finos/common-cloud-controls</code>, <code>cncf/contribute-site</code>.</p>
+
+<h3>Spec adoption (<code>security-insights.yml</code>) — the bigger story</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Adopter</th><th>Ecosystem status</th></tr></thead>
+  <tbody>
+    <tr><td><a href="https://github.com/cloudnative-pg/cloudnative-pg">cloudnative-pg</a></td><td><strong>CNCF graduated</strong></td></tr>
+    <tr><td><a href="https://github.com/wasmCloud/wasmCloud">wasmCloud</a></td><td><strong>CNCF incubating</strong></td></tr>
+    <tr><td><a href="https://github.com/projectcapsule/capsule">projectcapsule/capsule</a></td><td>CNCF sandbox</td></tr>
+    <tr><td><a href="https://github.com/ossf/scorecard">ossf/scorecard</a></td><td>OpenSSF flagship</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>These four use the format <strong>without importing the Go library</strong> — invisible to the dependency graph, and reaching outside the GRC-tooling orbit in a way SDK adoption does not. CloudNativePG's use is independently documented in <a href="https://www.gabrielebartolini.it/articles/2026/05/cloudnativepg-and-crunchy-pgo-an-honest-opinionated-comparison/">Gabriele Bartolini's comparison writeup</a>.</p>
+
+<p><strong>It is currently untracked.</strong> A scheduled code search, recorded in <code>gemaraproj/community</code>, would make it trendable.</p>
+
+<p class="callout"><strong>Direction of travel:</strong> nearly every SDK adopter is a standards or assessment project, not an end-user application. Gemara is <strong>codifying standards</strong>, not chasing wide adoption. Legitimate — but it means growth tracks standards bodies converted, not downloads.</p>
+
+<p><strong>Release gap:</strong> <code>grcli</code>, <code>gemara-react</code>, <code>grc-store-clientkit</code>, <code>gemara-ai</code> have <strong>never cut a release</strong> despite active development. Users cannot pin a version.</p>
+
+<!-- ============ 7 ============ -->
+<h2><span class="num">7</span>Visibility — reach exists, the loop is open</h2>
+
+<p>2026 saw talks at <strong>OpenSSF Community Day NA and EU</strong>, <strong>DevConf CZ</strong>, and <strong>KubeCon NA SecurityCon</strong>, plus OpenSSF blog coverage (including <a href="https://openssf.org/blog/2026/10/22/who-checked-it-attestations-gemara-and-cra-due-diligence/">CRA due diligence</a>) and third-party mentions from CUE Labs and CloudNativePG.</p>
+
+<p class="callout"><strong>Gap: none of it is linked from the repos.</strong> No talks/media page on <code>website</code>, no README mention, not in <code>awesome-gemara</code>. A viewer who hears a talk has no path back to a first issue.</p>
+
+<details>
+  <summary>Full talk, blog, and post list</summary>
+  <div class="details-body">
+    <div class="scroll">
+    <table>
+      <caption>Talks, 2026</caption>
+      <thead><tr><th>Event</th><th>Talk</th><th>Recording</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>OpenSSF Community Day NA — Minneapolis</td>
+          <td><a href="https://openssfcdna2026.sched.com/event/2I458/gemara-the-grc-architecture-you-didnt-know-you-built-hannah-braswell-jennifer-power-red-hat">Gemara: The GRC Architecture You Didn't Know You Built</a> — Hannah Braswell, Jennifer Power (Red Hat)</td>
+          <td><a href="https://youtu.be/eGWm29YtEJw?si=LMZ2h9NCVxYsKGqH">YouTube</a></td>
+        </tr>
+        <tr>
+          <td>OpenSSF Community Day EU — Prague</td>
+          <td><a href="https://openssfcdeu2026.sched.com/event/2RA3q/from-first-pr-to-hardening-guide-structured-security-with-gemara-hannah-braswell-red-hat">From First PR to Hardening Guide</a> — Hannah Braswell (Red Hat)</td>
+          <td><a href="https://www.youtube.com/watch?v=5jcwp5It8gU&amp;list=PLDEhySvXRac0&amp;index=14">YouTube</a></td>
+        </tr>
+        <tr>
+          <td>DevConf CZ 2026</td>
+          <td><a href="https://pretalx.devconf.info/devconf-cz-2026/schedule/">Hardening the Source: Gemara, ComplyTime and Ampel</a></td>
+          <td><a href="https://youtu.be/lJR-59r2MB4?si=DX4zPWMIrHG2_zCP">YouTube</a></td>
+        </tr>
+        <tr>
+          <td>KubeCon NA — OpenSource SecurityCon</td>
+          <td>"The Golden Path Doesn't Exist Yet" lightning round</td>
+          <td><a href="https://www.linkedin.com/posts/openssf_securitycon-kubecon-cloudnativecon-activity-7525707447039131648-W3B1">LinkedIn</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="scroll">
+    <table>
+      <caption>Blogs and mentions</caption>
+      <thead><tr><th>Post</th><th>Author / outlet</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://openssf.org/blog/2026/10/22/who-checked-it-attestations-gemara-and-cra-due-diligence/">Who Checked It? Attestations, Gemara, and CRA Due Diligence</a></td><td>Eddie Knight — OpenSSF</td></tr>
+        <tr><td><a href="https://openssf.org/blog/2026/03/09/introducing-the-gemara-model/">Introducing the Gemara Model</a></td><td>OpenSSF</td></tr>
+        <tr><td><a href="https://cue.dev/blog/make-configuration-user-friendly/">Make Configuration User Friendly</a></td><td>CUE Labs</td></tr>
+        <tr><td><a href="https://www.gabrielebartolini.it/articles/2026/05/cloudnativepg-and-crunchy-pgo-an-honest-opinionated-comparison/">CloudNativePG vs Crunchy PGO: An Honest, Opinionated Comparison</a></td><td>Gabriele Bartolini — <strong>independent adopter</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="margin-bottom:0"><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/feed/update/urn:li:activity:7524469471328120832/">Eddie Knight on Gemara / OSPS Baseline / Privateer / GRC Store</a></p>
+  </div>
+</details>
+
+<!-- ============ 8 ============ -->
+<h2><span class="num">8</span>Initiatives</h2>
+<ul>
+  <li><strong>Security Slam 2026</strong> — Gemara is wired in from the outside (<code>pvtr-security-slam-review</code> imports <code>go-gemara</code>; Slam repos carry Gemara <code>security-insights.yml</code>). Open question: <strong>are Gemara's own repos entered, and would they pass?</strong> With 7 of 14 missing <code>security-insights.yml</code> and only 2 carrying a <code>SECURITY.md</code>, entering now would score poorly. Fixing the dogfooding gap is a prerequisite.</li>
+  <li><strong>Mentorship (LFX)</strong> — the 12-person cohort suggests mentorship-style intake is already happening informally, with no tracking issue or board.</li>
+  <li><strong>OpenSSF WG participation</strong> — not measurable from repo data.</li>
+</ul>
+
+<!-- ============ 9 ============ -->
+<h2><span class="num">9</span>LFX Insights — coverage is broken</h2>
+
+<p>Gemara appears in Insights as <strong>a single repo inside the OpenSSF collection, under its old path</strong> (<code>ossf/gemara</code>). <a href="https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days&amp;start=2025-11-16&amp;end=2026-11-16">Primary link, past 365 days</a>. There is no standalone <code>/project/gemara</code> page.</p>
+
+<ol>
+  <li><strong>Stale URL.</strong> <code>ossf/gemara</code> redirects to <code>gemaraproj/gemara</code> — data likely still flows, but the name and link mislead anyone evaluating the project.</li>
+  <li><strong>1 of 14 repos tracked.</strong> Every number in this report outside the flagship repo is invisible to LFX. Request the <code>gemaraproj</code> org be added to the OpenSSF collection.</li>
+</ol>
+
+<p><strong>Five metrics LFX could give us that GitHub cannot — all currently uncollected:</strong> contributor count by employer, active maintainers with merge rights, community meeting attendance, per-repo Scorecard, contributor retention.</p>
+
+<p class="callout">Note: the public OpenSSF org figures (23 maintainers, 122 orgs, Scorecard 7.3) cover <strong>all of OpenSSF</strong>, not Gemara, and should not be quoted as ours.</p>
+
+<!-- ============ recs ============ -->
+<h2>Recommendations</h2>
+<p>Ordered by leverage per hour.</p>
+
+<div class="rec-group">
+  <h3><span class="when">This week</span> minutes to hours each</h3>
+  <ol>
+    <li>Set <strong>GitHub topics on all 14 repos</strong> (<code>grc</code>, <code>compliance</code>, <code>security</code>, <code>policy-as-code</code>, <code>supply-chain</code>, <code>openssf</code>).</li>
+    <li>Add <strong>descriptions</strong> to <code>gemara-react</code>, <code>gemara-python</code>, <code>community</code>.</li>
+    <li><strong>Triage the 57 unanswered issues</strong> — a one-line ack resets the 8.3-day median. Start with <code>go-gemara</code> and <code>community</code>.</li>
+    <li>Fix <strong><code>gemara-mcp-eval-infra</code>'s license</strong> to a recognized SPDX identifier.</li>
+    <li><strong>File the LF Insights ticket</strong> — correct the URL, add the other 13 repos.</li>
+  </ol>
+</div>
+
+<div class="rec-group">
+  <h3><span class="when">This month</span> structural</h3>
+  <ol start="6">
+    <li>Create <strong>15–20 <code>good first issue</code>s</strong>, 5+ in <code>gemara</code>. Natural batch: add <code>security-insights.yml</code> to the 7 repos missing it — on-ramp work that also closes the dogfooding gap.</li>
+    <li>Add <strong>CONTRIBUTING.md and a license to <code>website</code></strong>.</li>
+    <li><strong>Burn down the <code>gemara</code> + <code>website</code> PR backlog</strong> (58 of 83 open PRs) — where the new cohort's work is sitting.</li>
+    <li><strong>Enable Discussions org-wide.</strong></li>
+    <li><strong>Add a talks/media page</strong> to <code>website</code>, linked from the <code>gemara</code> README.</li>
+  </ol>
+</div>
+
+<div class="rec-group">
+  <h3><span class="when">This quarter</span> sustainability</h3>
+  <ol start="11">
+    <li><strong>Expand the reviewer pool past 3.</strong> <code>nameetsinha7-hue</code>, <code>YAshhh29</code>, <code>harshsomankar123-tech</code>, <code>astrogilda</code>, <code>sonupreetam</code> already review voluntarily — formalize via the contributor ladder with scoped merge rights.</li>
+    <li><strong>Reduce <code>jmeridth</code>'s single-point-of-failure exposure</strong> with per-repo CODEOWNERS.</li>
+    <li><strong>Cut first releases</strong> for <code>grcli</code>, <code>gemara-react</code>, <code>grc-store-clientkit</code>, <code>gemara-ai</code>.</li>
+    <li><strong>Write adopter case studies</strong> — CloudNativePG first (CNCF graduated, public writeup to cite), then wasmCloud, OpenSSF Scorecard, IBM, FINOS, Capsule.</li>
+    <li><strong>Automate spec-adoption tracking</strong> via scheduled code search committed to <code>gemaraproj/community</code>.</li>
+    <li><strong>Record LFX metrics quarterly</strong> so attendance and org diversity become trendable.</li>
+  </ol>
+</div>
+
+<details>
+  <summary>Method and caveats</summary>
+  <div class="details-body">
+    <ul>
+      <li>Pulled 2026-11-17 via GitHub REST + GraphQL. Window 2026-08-19 → 2026-11-17. Archived repos excluded (<code>gemara-staging</code>, <code>gemara-hub</code>, <code>grcli-staging</code>).</li>
+      <li>"Contributor" = author of a merged PR. Commit-only and issue-only participants are not counted, so the all-time 31 undercounts participation.</li>
+      <li>Bots (<code>dependabot</code>, <code>coderabbitai</code>, <code>github-actions</code>, <code>copilot-pull-request-reviewer</code>, <code>kusari-inspector</code>) excluded from human counts.</li>
+      <li>Issue first-response = first non-author, non-bot comment. Sampled from 100 most recent issues per repo; coverage complete for the window.</li>
+      <li>Review counts sample the 100 most recently updated merged PRs per repo; <code>gemara</code> and <code>go-gemara</code> may be slightly undercounted.</li>
+      <li>Adoption measured two ways: code search for <code>gemaraproj/go-gemara</code> in <code>go.mod</code>, and for <code>gemara</code> in <code>security-insights.yml</code>. Code search indexes only public, non-forked, active repos — both are floors, not totals. Mirrors and forks discounted by hand (<code>codacy-open-source-projects-scans/cloudnative-pg</code>, <code>ydnmu/scorecard</code>).</li>
+      <li>§7 links come from provided notes; URLs were not individually fetched to confirm they resolve.</li>
+      <li>§8 initiative status is partly inferred, partly unmeasured.</li>
+    </ul>
+  </div>
+</details>
+
+<footer class="colophon">
+  Gemara Community Health Report · generated 2026-11-18 from data pulled 2026-11-17 · source: <code>gemara-community-health-report-2026-11.md</code>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var stored = null;
+  try { stored = localStorage.getItem('gemara-report-theme'); } catch (e) {}
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var mode = stored || (prefersDark ? 'dark' : 'light');
+  apply(mode);
+  btn.addEventListener('click', function () {
+    mode = (root.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+    apply(mode);
+    try { localStorage.setItem('gemara-report-theme', mode); } catch (e) {}
+  });
+  function apply(m) {
+    root.setAttribute('data-theme', m);
+    btn.textContent = (m === 'dark') ? 'Light' : 'Dark';
+  }
+  // Open every <details> before printing so nothing is lost on paper/PDF.
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+  });
+})();
+</script>
+</body>
+</html>
