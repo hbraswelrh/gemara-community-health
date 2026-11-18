@@ -5,6 +5,7 @@ plain dicts and they hand back the numbers that go into the report, which
 keeps the arithmetic testable without recording HTTP traffic.
 """
 
+import re
 import statistics
 from datetime import datetime, timedelta, timezone
 
@@ -250,8 +251,31 @@ def is_bot(login, typename=None):
     return login.lower() in KNOWN_BOT_LOGINS
 
 
+ISO_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def require_iso_day(value):
+    """Return `value` if it is a bare calendar date, else raise.
+
+    The window end comes in as a workflow_dispatch input, which makes it the
+    only value here chosen by a person rather than by the code. Shell callers
+    are tempted to lean on `date -d` to validate it; `date` is not a
+    validator. GNU date reads a parenthesised run as a comment and folds
+    newlines inside it to whitespace, so it exits 0 on
+    `2026-11-01 (\\nFOO=1 )` — which is two lines to anything writing the
+    value into a line-oriented file such as $GITHUB_ENV.
+    """
+    if not isinstance(value, str) or not ISO_DAY.match(value):
+        raise ValueError("expected a date as YYYY-MM-DD, got: {!r}".format(value))
+    try:
+        datetime.strptime(value, "%Y-%m-%d")
+    except ValueError:
+        raise ValueError("not a real calendar date, expected YYYY-MM-DD: {!r}".format(value)) from None
+    return value
+
+
 def window_bounds(end_day, days):
     """Inclusive calendar bounds for a rolling window ending on `end_day`."""
-    end = _instant(end_day + "T00:00:00Z")
+    end = _instant(require_iso_day(end_day) + "T00:00:00Z")
     start = end - timedelta(days=days)
     return start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")

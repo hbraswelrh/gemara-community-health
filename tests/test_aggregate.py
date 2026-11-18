@@ -265,6 +265,36 @@ class WindowBoundsTest(unittest.TestCase):
         self.assertEqual("2026-08-19", start)
 
 
+class DayValidationTest(unittest.TestCase):
+    """The window end arrives from a workflow_dispatch input, so it is the
+    one value in the collector a person outside the code can choose."""
+
+    def test_accepts_a_plain_calendar_date(self):
+        self.assertEqual("2026-11-17", aggregate.require_iso_day("2026-11-17"))
+
+    def test_rejects_a_date_carrying_a_newline(self):
+        # GNU date is not a validator: it treats a parenthesised run as a
+        # comment and whitespace-folds newlines inside it, so `date -d` exits
+        # 0 on this. Anything downstream writing the value to a line-oriented
+        # file would be writing two lines.
+        with self.assertRaises(ValueError) as caught:
+            aggregate.require_iso_day("2026-11-01 (\nGIT_CONFIG_COUNT=1 )")
+
+        self.assertIn("YYYY-MM-DD", str(caught.exception))
+
+    def test_rejects_free_text(self):
+        with self.assertRaises(ValueError):
+            aggregate.require_iso_day("yesterday")
+
+    def test_rejects_a_date_shaped_string_that_is_not_a_real_day(self):
+        with self.assertRaises(ValueError):
+            aggregate.require_iso_day("2026-13-45")
+
+    def test_window_bounds_refuses_the_same_values(self):
+        with self.assertRaises(ValueError):
+            aggregate.window_bounds("2026-11-01 (\nFOO=1 )", 90)
+
+
 class BotDetectionTest(unittest.TestCase):
     def test_graphql_bot_accounts_are_bots(self):
         self.assertTrue(aggregate.is_bot("copilot-pull-request-reviewer", typename="Bot"))
