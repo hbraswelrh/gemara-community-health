@@ -1,0 +1,449 @@
+{
+  "adoption": {
+    "method": "Curated by hand in data/adopters.json. Automating this needs cross-org code search, which the workflow's GITHUB_TOKEN cannot do; adding a PAT was judged not worth the secret. Treat the list as a floor, not a total.",
+    "sdk": [
+      {
+        "note": "Independent of the ComplyTime/Privateer orbit.",
+        "project": "IBM/ai-security-baseline"
+      },
+      {
+        "note": "Independent of the ComplyTime/Privateer orbit.",
+        "project": "finos/common-cloud-controls"
+      },
+      {
+        "note": "Independent of the ComplyTime/Privateer orbit.",
+        "project": "cncf/contribute-site"
+      }
+    ],
+    "source": "data/adopters.json",
+    "spec": [
+      {
+        "evidence": "https://www.gabrielebartolini.it/articles/2026/05/cloudnativepg-and-crunchy-pgo-an-honest-opinionated-comparison/",
+        "note": "Uses security-insights.yml without importing the Go SDK.",
+        "project": "cloudnative-pg",
+        "status": "CNCF graduated"
+      },
+      {
+        "evidence": null,
+        "note": "Uses security-insights.yml without importing the Go SDK.",
+        "project": "wasmCloud",
+        "status": "CNCF incubating"
+      },
+      {
+        "evidence": null,
+        "note": "Uses security-insights.yml without importing the Go SDK.",
+        "project": "projectcapsule/capsule",
+        "status": "CNCF sandbox"
+      },
+      {
+        "evidence": null,
+        "note": "Uses security-insights.yml without importing the Go SDK.",
+        "project": "ossf/scorecard",
+        "status": "OpenSSF flagship"
+      }
+    ]
+  },
+  "ease_of_entry": {
+    "good_first_issues_total": 5,
+    "repos": [
+      {
+        "gaps": [
+          "no_topics",
+          "no_discussions"
+        ],
+        "good_first_issues": 0,
+        "name": "gemara"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_discussions"
+        ],
+        "good_first_issues": 1,
+        "name": "go-gemara"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_license",
+          "no_contributing",
+          "no_issue_template",
+          "no_discussions"
+        ],
+        "good_first_issues": 0,
+        "name": ".github"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_issue_template",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 0,
+        "name": "awesome-gemara"
+      },
+      {
+        "gaps": [
+          "no_topics"
+        ],
+        "good_first_issues": 0,
+        "name": "gemara-mcp"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_license",
+          "no_contributing",
+          "no_issue_template",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 0,
+        "name": "gemara-mcp-eval-infra"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_issue_template",
+          "no_discussions"
+        ],
+        "good_first_issues": 0,
+        "name": "gemara-publish-action"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_description",
+          "no_contributing",
+          "no_issue_template",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 0,
+        "name": "gemara-react"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_issue_template",
+          "no_discussions"
+        ],
+        "good_first_issues": 0,
+        "name": "gemara-ai"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_license",
+          "no_contributing",
+          "no_issue_template",
+          "no_discussions"
+        ],
+        "good_first_issues": 1,
+        "name": "website"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_description",
+          "no_license",
+          "no_contributing",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 1,
+        "name": "community"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_contributing",
+          "no_issue_template",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 1,
+        "name": "grc-store-clientkit"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_issue_template",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 0,
+        "name": "grcli"
+      },
+      {
+        "gaps": [
+          "no_topics",
+          "no_description",
+          "no_issue_template",
+          "no_discussions",
+          "no_security_insights"
+        ],
+        "good_first_issues": 1,
+        "name": "gemara-python"
+      }
+    ],
+    "repos_without_topics": 14,
+    "security_insights_coverage": "7/14"
+  },
+  "lfx_insights": {
+    "coverage_note": "LFX Insights tracks 1 of the org's repositories, still filed under the pre-rename path ossf/gemara. Numbers there describe that repo only.",
+    "project_url": "https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days",
+    "see_lfx_instead": [
+      {
+        "description": "Which companies are funding the work",
+        "metric": "contributors_by_employer",
+        "url": "https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days",
+        "where": "Contributors \u2192 Organizations"
+      },
+      {
+        "description": "Who currently holds merge rights",
+        "metric": "active_maintainers",
+        "url": "https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days",
+        "where": "Contributors \u2192 Maintainers"
+      },
+      {
+        "description": "Community meeting turnout over time",
+        "metric": "meeting_attendance",
+        "url": "https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days",
+        "where": "Community \u2192 Meetings"
+      },
+      {
+        "description": "OpenSSF Scorecard result per repository",
+        "metric": "scorecard",
+        "url": "https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days",
+        "where": "Security \u2192 Scorecard"
+      },
+      {
+        "description": "How many contributors come back next quarter",
+        "metric": "contributor_retention",
+        "url": "https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days",
+        "where": "Contributors \u2192 Retention"
+      }
+    ]
+  },
+  "meta": {
+    "auth": "workflow GITHUB_TOKEN, public data only",
+    "collector": "scripts/collect.py",
+    "generated_at": "2026-11-18T13:59:04Z",
+    "org": "gemaraproj",
+    "repos_in_scope": 14,
+    "window_end": "2026-11-17",
+    "window_start": "2026-08-19"
+  },
+  "new_contributors": {
+    "cohort": [
+      {
+        "first_merge": "2026-09-10",
+        "login": "PaarthPandey10"
+      },
+      {
+        "first_merge": "2026-09-15",
+        "login": "astrogilda"
+      },
+      {
+        "first_merge": "2026-09-30",
+        "login": "gxmiranda"
+      },
+      {
+        "first_merge": "2026-10-02",
+        "login": "kocaemre"
+      },
+      {
+        "first_merge": "2026-10-05",
+        "login": "vansh-nagar"
+      },
+      {
+        "first_merge": "2026-10-24",
+        "login": "jor2"
+      },
+      {
+        "first_merge": "2026-10-25",
+        "login": "YAshhh29"
+      },
+      {
+        "first_merge": "2026-10-28",
+        "login": "harshsomankar123-tech"
+      },
+      {
+        "first_merge": "2026-10-29",
+        "login": "nameetsinha7-hue"
+      },
+      {
+        "first_merge": "2026-10-30",
+        "login": "ravindra-RKB"
+      },
+      {
+        "first_merge": "2026-11-07",
+        "login": "yvonnedevlinrh"
+      },
+      {
+        "first_merge": "2026-11-10",
+        "login": "imshubham22apr-gif"
+      }
+    ],
+    "count": 12
+  },
+  "responsiveness": {
+    "median_days_to_first_response": 5.6,
+    "opened": 97,
+    "unanswered": 61,
+    "unanswered_pct": 62.9
+  },
+  "reviews": {
+    "bot_reviews": 50,
+    "human_reviews": 489,
+    "reviewers_total": 16,
+    "top_n": 3,
+    "top_n_share_pct": 78.9,
+    "top_reviewers": [
+      {
+        "login": "jpower432",
+        "reviews": 229,
+        "share_pct": 46.8
+      },
+      {
+        "login": "jmeridth",
+        "reviews": 110,
+        "share_pct": 22.5
+      },
+      {
+        "login": "eddie-knight",
+        "reviews": 47,
+        "share_pct": 9.6
+      }
+    ]
+  },
+  "scale": {
+    "forks": 99,
+    "human_contributors_all_time": 31,
+    "human_pr_authors_in_window": 19,
+    "merged_in_window": {
+      "bot_merged": 106,
+      "human_merged": 162,
+      "median_hours_to_merge": 22.7
+    },
+    "open_issues": 90,
+    "open_prs": 84,
+    "per_repo": [
+      {
+        "forks": 32,
+        "merged_in_window": 68,
+        "name": "gemara",
+        "open_issues": 35,
+        "open_prs": 41,
+        "releases": 62
+      },
+      {
+        "forks": 18,
+        "merged_in_window": 28,
+        "name": "go-gemara",
+        "open_issues": 13,
+        "open_prs": 5,
+        "releases": 19
+      },
+      {
+        "forks": 2,
+        "merged_in_window": 8,
+        "name": ".github",
+        "open_issues": 1,
+        "open_prs": 0,
+        "releases": 0
+      },
+      {
+        "forks": 3,
+        "merged_in_window": 3,
+        "name": "awesome-gemara",
+        "open_issues": 0,
+        "open_prs": 0,
+        "releases": 0
+      },
+      {
+        "forks": 11,
+        "merged_in_window": 32,
+        "name": "gemara-mcp",
+        "open_issues": 3,
+        "open_prs": 5,
+        "releases": 7
+      },
+      {
+        "forks": 3,
+        "merged_in_window": 2,
+        "name": "gemara-mcp-eval-infra",
+        "open_issues": 0,
+        "open_prs": 1,
+        "releases": 1
+      },
+      {
+        "forks": 4,
+        "merged_in_window": 25,
+        "name": "gemara-publish-action",
+        "open_issues": 4,
+        "open_prs": 1,
+        "releases": 5
+      },
+      {
+        "forks": 2,
+        "merged_in_window": 29,
+        "name": "gemara-react",
+        "open_issues": 0,
+        "open_prs": 6,
+        "releases": 0
+      },
+      {
+        "forks": 6,
+        "merged_in_window": 6,
+        "name": "gemara-ai",
+        "open_issues": 6,
+        "open_prs": 3,
+        "releases": 0
+      },
+      {
+        "forks": 11,
+        "merged_in_window": 26,
+        "name": "website",
+        "open_issues": 8,
+        "open_prs": 19,
+        "releases": 0
+      },
+      {
+        "forks": 1,
+        "merged_in_window": 7,
+        "name": "community",
+        "open_issues": 11,
+        "open_prs": 1,
+        "releases": 0
+      },
+      {
+        "forks": 0,
+        "merged_in_window": 3,
+        "name": "grc-store-clientkit",
+        "open_issues": 5,
+        "open_prs": 0,
+        "releases": 0
+      },
+      {
+        "forks": 2,
+        "merged_in_window": 9,
+        "name": "grcli",
+        "open_issues": 3,
+        "open_prs": 0,
+        "releases": 0
+      },
+      {
+        "forks": 4,
+        "merged_in_window": 22,
+        "name": "gemara-python",
+        "open_issues": 1,
+        "open_prs": 2,
+        "releases": 1
+      }
+    ],
+    "releases_all_time": 95
+  }
+}

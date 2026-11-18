@@ -1,0 +1,36 @@
+{
+  "_comment": "Kept by hand. Cross-org code search needs a personal access token, and adding one was judged not worth the secret for a list that changes a few times a quarter. Treat both lists as floors, not totals.",
+  "source": "data/adopters.json",
+  "last_reviewed": "2026-11-18",
+  "spec": [
+    {
+      "project": "cloudnative-pg",
+      "status": "CNCF graduated",
+      "evidence": "https://www.gabrielebartolini.it/articles/2026/05/cloudnativepg-and-crunchy-pgo-an-honest-opinionated-comparison/",
+      "note": "Uses security-insights.yml without importing the Go SDK."
+    },
+    {
+      "project": "wasmCloud",
+      "status": "CNCF incubating",
+      "evidence": null,
+      "note": "Uses security-insights.yml without importing the Go SDK."
+    },
+    {
+      "project": "projectcapsule/capsule",
+      "status": "CNCF sandbox",
+      "evidence": null,
+      "note": "Uses security-insights.yml without importing the Go SDK."
+    },
+    {
+      "project": "ossf/scorecard",
+      "status": "OpenSSF flagship",
+      "evidence": null,
+      "note": "Uses security-insights.yml without importing the Go SDK."
+    }
+  ],
+  "sdk": [
+    {"project": "IBM/ai-security-baseline", "note": "Independent of the ComplyTime/Privateer orbit."},
+    {"project": "finos/common-cloud-controls", "note": "Independent of the ComplyTime/Privateer orbit."},
+    {"project": "cncf/contribute-site", "note": "Independent of the ComplyTime/Privateer orbit."}
+  ]
+}
