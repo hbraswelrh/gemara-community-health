@@ -265,50 +265,30 @@
     </details>
   </div>
   <div class="tile">
-    <span class="label">Review concentration</span>
-    <span class="value">82% <small>by 3 people</small></span>
-    <span class="chip serious">Serious</span>
-    <details>
-      <summary aria-label="Details about review concentration">Details</summary>
-      <p class="note">Share of human reviews across the org.</p>
-    </details>
-  </div>
-  <div class="tile">
     <span class="label">External spec adopters</span>
-    <span class="value">4 <small>CNCF / OpenSSF</small></span>
+    <span class="value">2 <small>CNCF / OpenSSF</small></span>
     <span class="chip good">Strength</span>
     <details>
       <summary aria-label="Details about external spec adopters">Details</summary>
-      <p class="note">CloudNativePG, wasmCloud, Capsule, and OpenSSF Scorecard use the spec without the Go SDK.</p>
-    </details>
-  </div>
-  <div class="tile">
-    <span class="label">Getting started</span>
-    <span class="value">5 <small>good first issues</small></span>
-    <span class="chip warning">Warning</span>
-    <details>
-      <summary aria-label="Details about getting started">Details</summary>
-      <p class="note">None in <code>gemara</code>. No repos have GitHub topics.</p>
+      <p class="note">CloudNativePG and OpenSSF Scorecard use the spec without the Go SDK.</p>
     </details>
   </div>
 </section>
 
-<p class="callout">The median time to merge a non-bot PR was about 19 hours. If you are new and need an answer before you can open a PR, the wait for an issue reply can make it harder to get started.</p>
+<p class="callout">The median time to merge a non-bot PR was about 19 hours, but most new issues went unanswered during the reporting period.</p>
+
+<p>At the Fall 2026 <a href="https://securityslam.com/">Security Slam</a>, participants used Gemara threat catalogs as evidence for the Inspector badge.</p>
 
 <section class="asks" aria-labelledby="leadership-requests">
   <h2 id="leadership-requests">Leadership requests</h2>
   <ol>
-    <li>
-      <strong>Give reviewers merge rights</strong>
-      <p>Move five active volunteer reviewers up the contributor ladder and give them merge rights for the repos they review.</p>
-    </li>
     <li>
       <strong>Update LFX Insights coverage</strong>
       <p>File a Linux Foundation ticket to update the <code>ossf/gemara</code> listing in LFX Insights and add the other 13 repos.</p>
     </li>
     <li>
       <strong>Document spec adoption</strong>
-      <p>Document how the four adopters in this report use the spec and keep a public record as we find more.</p>
+      <p>Document how projects use the spec even when they don’t import the SDK.</p>
     </li>
   </ol>
 </section>
@@ -388,16 +368,7 @@
 </details>
 
 <!-- ============ 3 ============ -->
-<h2><span class="num">3</span>Maintainer workload</h2>
-
-<p>Three people handled 82% of human reviews: <code>jpower432</code> (74, 50%), <code>jmeridth</code> (29, 20%), and <code>eddie-knight</code> (19, 13%). Separately, <code>coderabbitai</code> did 15 reviews and Copilot did 3.</p>
-
-<p><code>jmeridth</code> was the only person with merged PRs in all 14 repos. If someone else needs to pick up maintenance across repos, we should make it clear who can help with each one.</p>
-
-<p>Three of the eight GitHub org members did not review a PR in the 90-day window. In the review sample, 39 of 143 merged PRs (27%) had no human review. Most were bot or maintenance PRs; check whether the rest included changes that needed review.</p>
-
-<!-- ============ 4 ============ -->
-<h2><span class="num">4</span>Issue replies and PR merges</h2>
+<h2><span class="num">3</span>Issue replies and PR merges</h2>
 
 <div class="scroll">
 <table>
@@ -414,19 +385,8 @@
 
 <p>The median time to merge a non-bot PR was 19.4 hours across the org. Most repos had a median below 3 hours.</p>
 
-<!-- ============ 5 ============ -->
-<h2><span class="num">5</span>Getting started</h2>
-
-<p>What would you find if you came to GitHub looking for a place to start? None of the repos have topics, so a topic search for <code>grc</code>, <code>compliance</code>, <code>policy-as-code</code>, or <code>supply-chain</code> will miss them. Of the 5 open issues labeled <code>good first issue</code>, none are in <code>gemara</code>, even though it has 31 forks. Another label to look for is <code>help wanted</code>, which appears on 11 open issues across the org.</p>
-
-<p><code>website</code> has 11 forks and 19 open PRs but no <code>CONTRIBUTING.md</code> or license. <code>gemara-react</code>, <code>gemara-python</code>, and <code>community</code> lack repo descriptions. Four of the 14 repos have issue templates, and only <code>gemara-mcp</code> has Discussions enabled. GitHub lists the <code>gemara-mcp-eval-infra</code> license as <code>NOASSERTION</code>, which leaves prospective adopters without a clear license to review.</p>
-
-<p>The repos inherit <code>CODE_OF_CONDUCT</code>, <code>GOVERNANCE</code>, <code>CHARTER</code>, <code>MAINTAINERS</code>, <code>CONTRIBUTOR_LADDER</code>, and <code>SECURITY</code> from <code>.github</code>, so there is no need to recreate those files to improve the repo-level guidance.</p>
-
-<p class="callout">Seven of the 14 repos have a <code>security-insights.yml</code>. Adding it to the other seven would give new contributors a concrete first issue and let people see how we use the format in our own repos.</p>
-
-<!-- ============ 6 ============ -->
-<h2><span class="num">6</span>SDK and spec adoption</h2>
+<!-- ============ 4 ============ -->
+<h2><span class="num">4</span>SDK and spec adoption</h2>
 
 <p>The Go dependency graph shows 25 external repos importing <code>go-gemara</code>. Most are in ComplyTime, Privateer, revanite-io, or OpenSSF. Independent adopters include <code>IBM/ai-security-baseline</code>, <code>finos/common-cloud-controls</code>, and <code>cncf/contribute-site</code>.</p>
 
@@ -437,21 +397,21 @@
   <thead><tr><th>Adopter</th><th>Ecosystem status</th></tr></thead>
   <tbody>
     <tr><td><a href="https://github.com/cloudnative-pg/cloudnative-pg">cloudnative-pg</a></td><td>CNCF graduated</td></tr>
-    <tr><td><a href="https://github.com/wasmCloud/wasmCloud">wasmCloud</a></td><td>CNCF incubating</td></tr>
-    <tr><td><a href="https://github.com/projectcapsule/capsule">projectcapsule/capsule</a></td><td>CNCF sandbox</td></tr>
     <tr><td><a href="https://github.com/ossf/scorecard">ossf/scorecard</a></td><td>OpenSSF flagship</td></tr>
   </tbody>
 </table>
 </div>
 
-<p>These four projects use the format without importing the Go library, so they do not show up in the dependency graph. <a href="https://www.gabrielebartolini.it/articles/2026/05/cloudnativepg-and-crunchy-pgo-an-honest-opinionated-comparison/">Gabriele Bartolini's comparison of CloudNativePG and Crunchy PGO</a> documents one example. A scheduled code search with results saved in <code>gemaraproj/community</code> would let us see how spec adoption changes over time.</p>
+<p>Neither project imports the Go library, so they do not show up in the dependency graph. <a href="https://www.gabrielebartolini.it/articles/2026/05/cloudnativepg-and-crunchy-pgo-an-honest-opinionated-comparison/">Gabriele Bartolini's comparison of CloudNativePG and Crunchy PGO</a> documents one example. A scheduled code search with results saved in <code>gemaraproj/community</code> would let us see how spec adoption changes over time.</p>
+
+<p>Seven of Gemara’s 14 repos have a <code>security-insights.yml</code> file.</p>
 
 <p class="callout">Nearly every SDK adopter works on standards or assessments. I would track which standards and assessment projects take up Gemara rather than use download counts as the main measure of adoption.</p>
 
 <p><code>grcli</code>, <code>gemara-react</code>, <code>grc-store-clientkit</code>, and <code>gemara-ai</code> are under active development but have no release versions for users to pin.</p>
 
-<!-- ============ 7 ============ -->
-<h2><span class="num">7</span>Talks and project coverage</h2>
+<!-- ============ 5 ============ -->
+<h2><span class="num">5</span>Talks and project coverage</h2>
 
 <p>Gemara talks in 2026 included OpenSSF Community Day NA and EU, DevConf CZ, and KubeCon NA SecurityCon. OpenSSF covered <a href="https://openssf.org/blog/2026/10/22/who-checked-it-attestations-gemara-and-cra-due-diligence/">CRA due diligence</a>, and CUE Labs and CloudNativePG also wrote about the project.</p>
 
@@ -504,14 +464,14 @@
   </div>
 </details>
 
-<!-- ============ 8 ============ -->
-<h2><span class="num">8</span>Initiatives</h2>
-<p>Security Slam 2026 already uses Gemara: <code>pvtr-security-slam-review</code> imports <code>go-gemara</code>, and Slam repos carry <code>security-insights.yml</code>. Are we entering Gemara's own repos? Seven are missing <code>security-insights.yml</code> and only two carry their own <code>SECURITY.md</code>. I would close those gaps before entering.</p>
+<!-- ============ 6 ============ -->
+<h2><span class="num">6</span>Initiatives</h2>
+<p>Gemara was part of the <a href="https://securityslam.com/">Fall 2026 Security Slam</a> through the Inspector badge. To apply, teams documented project-specific threats in a Gemara threat catalog and linked their self-assessment evidence through <code>assessments.self.evidence</code> in <code>security-insights.yml</code>. The <a href="https://github.com/eddie-knight/pvtr-security-slam-review#what-each-badge-checks">Privateer review plugin</a> checks the evidence and validates the catalog against the Gemara schema. People make the final decision. <a href="https://github.com/cloudnative-pg/cloudnative-pg/issues/11763">CloudNativePG’s participation tracker</a> records that it earned the badge.</p>
 
-<p>The 12 new contributors suggest some informal mentoring may already be happening. I found no tracking issue or board for LFX mentorship. Repository activity does not tell us who participates in OpenSSF working groups.</p>
+<p>The repository data doesn’t show whether contributors took part in LFX Mentorship or OpenSSF working groups.</p>
 
-<!-- ============ 9 ============ -->
-<h2><span class="num">9</span>LFX Insights coverage</h2>
+<!-- ============ 7 ============ -->
+<h2><span class="num">7</span>LFX Insights coverage</h2>
 
 <p>LFX Insights lists <a href="https://insights.linuxfoundation.org/project/openssf/repository/ossf_gemara?timeRange=past365days&amp;start=2025-11-16&amp;end=2026-11-16">one Gemara repo in the OpenSSF collection</a>, under <code>ossf/gemara</code>. There is no standalone <code>/project/gemara</code> page.</p>
 
@@ -527,32 +487,25 @@
 <div class="rec-group">
   <h3><span class="when">This week</span></h3>
   <ol>
-    <li>Set GitHub topics on all 14 repos: <code>grc</code>, <code>compliance</code>, <code>security</code>, <code>policy-as-code</code>, <code>supply-chain</code>, and <code>openssf</code>.</li>
-    <li>Add descriptions to <code>gemara-react</code>, <code>gemara-python</code>, and <code>community</code>.</li>
     <li>Triage the 57 unanswered issues, starting with <code>go-gemara</code> and <code>community</code>. If you cannot resolve an issue yet, a short reply still tells the author someone has seen it.</li>
-    <li>Clarify the <code>gemara-mcp-eval-infra</code> license using a recognized SPDX identifier.</li>
     <li>File the LFX Insights ticket to update the listing and add the other 13 repos.</li>
   </ol>
 </div>
 
 <div class="rec-group">
   <h3><span class="when">This month</span></h3>
-  <ol start="6">
-    <li>Create 15 to 20 issues labeled <code>good first issue</code>, including at least 5 in <code>gemara</code>. Start with the 7 repos missing <code>security-insights.yml</code>.</li>
-    <li>Add <code>CONTRIBUTING.md</code> and a license to <code>website</code>.</li>
+  <ol start="3">
+    <li>Add <code>security-insights.yml</code> to the seven repos missing it.</li>
     <li>Review the 58 open PRs in <code>gemara</code> and <code>website</code>, where most of the new contributors' work is.</li>
-    <li>Enable Discussions across the org.</li>
     <li>Add a talks page to <code>website</code> and link it from the <code>gemara</code> README.</li>
   </ol>
 </div>
 
 <div class="rec-group">
   <h3><span class="when">This quarter</span></h3>
-  <ol start="11">
-    <li>Use the contributor ladder to give scoped merge rights to people who already review: <code>nameetsinha7-hue</code>, <code>YAshhh29</code>, <code>harshsomankar123-tech</code>, <code>astrogilda</code>, and <code>sonupreetam</code>.</li>
-    <li>Add per-repo <code>CODEOWNERS</code> so <code>jmeridth</code> is not the only point of contact for work that spans multiple repos.</li>
+  <ol start="6">
     <li>Publish first releases for <code>grcli</code>, <code>gemara-react</code>, <code>grc-store-clientkit</code>, and <code>gemara-ai</code>.</li>
-    <li>Write up how adopters use Gemara. Start with CloudNativePG, a graduated CNCF project with a public writeup to cite, then cover wasmCloud, OpenSSF Scorecard, IBM, FINOS, and Capsule.</li>
+    <li>Write up how adopters use Gemara, starting with CloudNativePG, then OpenSSF Scorecard, IBM, and FINOS.</li>
     <li>Schedule a code search for spec adopters and commit the results to <code>gemaraproj/community</code>.</li>
     <li>Record LFX metrics quarterly to see how meeting attendance and organizational diversity change over time.</li>
   </ol>
@@ -568,8 +521,7 @@
       <li>Issue first-response = first non-author, non-bot comment. Sampled from 100 most recent issues per repo; coverage complete for the window.</li>
       <li>Review counts sample the 100 most recently updated merged PRs per repo; <code>gemara</code> and <code>go-gemara</code> may be slightly undercounted.</li>
       <li>Adoption measured by searching for <code>gemaraproj/go-gemara</code> in <code>go.mod</code> and <code>gemara</code> in <code>security-insights.yml</code>. Both counts are lower bounds because code search only indexes public, active repos that are not forks. Mirrors and forks were also excluded by hand (<code>codacy-open-source-projects-scans/cloudnative-pg</code>, <code>ydnmu/scorecard</code>).</li>
-      <li>§7 links come from provided notes; URLs were not individually fetched to confirm they resolve.</li>
-      <li>§8 initiative status is partly inferred, partly unmeasured.</li>
+      <li>The talks and media links in section 5 were not all checked individually.</li>
     </ul>
   </div>
 </details>
