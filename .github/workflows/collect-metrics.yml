@@ -1,0 +1,123 @@
+name: Collect community health metrics
+
+# Refreshes the numbers behind the quarterly report. It does not write the
+# report — a human still reads the JSON and decides what it means.
+#
+# Auth is the built-in GITHUB_TOKEN. Everything collected is public data on a
+# public org, so there is no secret to provision, and nothing here needs a
+# personal access token.
+#
+# One repository setting is required before the pull request step works:
+# Settings -> Actions -> General -> "Allow GitHub Actions to create and
+# approve pull requests". Without it, `gh pr create` fails with a 403.
+
+on:
+  schedule:
+    # 06:00 UTC on the 1st. Quarterly reports, monthly data, so the window is
+    # never more than four weeks stale when someone goes to write one up.
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+    inputs:
+      window_days:
+        description: Window length in days
+        default: '90'
+        required: false
+      end_date:
+        description: Last day of the window (YYYY-MM-DD, blank for today)
+        default: ''
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: collect-metrics
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Run the collector's tests
+        # Stdlib only, so there is nothing to install and no reason to skip
+        # this. If the arithmetic is broken, stop before opening a pull
+        # request full of wrong numbers.
+        run: python3 -m unittest discover -s tests -t . -v
+
+      - name: Collect metrics
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WINDOW_DAYS: ${{ inputs.window_days || '90' }}
+          END_DATE: ${{ inputs.end_date }}
+        run: |
+          set -euo pipefail
+          END="${END_DATE:-$(date -u +%Y-%m-%d)}"
+
+          # Validate before anything reads these. `date -d` looks like a
+          # validator and is not one: GNU date treats a parenthesised run as
+          # a comment and folds newlines inside it to whitespace, so it exits
+          # 0 on `2026-11-01 (<newline>FOO=1 )`. Writing that to the
+          # line-oriented $GITHUB_ENV would hand the next step — which holds
+          # contents: write and a token — attacker-chosen variables.
+          if ! [[ "$END" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            echo "end_date must be YYYY-MM-DD, got: $END" >&2
+            exit 1
+          fi
+          if ! [[ "$WINDOW_DAYS" =~ ^[0-9]{1,4}$ ]]; then
+            echo "window_days must be a positive integer, got: $WINDOW_DAYS" >&2
+            exit 1
+          fi
+
+          STAMP="$(date -u -d "$END" +%Y-%m)"
+          python3 scripts/collect.py \
+            --org gemaraproj \
+            --window "$WINDOW_DAYS" \
+            --end "$END" \
+            --adopters data/adopters.json \
+            --out "data/metrics-${STAMP}.json"
+
+          # Published only once collection succeeded, so a failed run leaves
+          # nothing behind for a later step to pick up.
+          {
+            echo "STAMP=$STAMP"
+            echo "WINDOW_END=$END"
+          } >> "$GITHUB_ENV"
+
+      - name: Open a pull request if anything moved
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          # --porcelain rather than `git diff`, because the first run of a new
+          # month writes a file git has never seen and a diff would miss it.
+          if [ -z "$(git status --porcelain -- data/)" ]; then
+            echo "Collected metrics are identical to what is committed. Nothing to open."
+            exit 0
+          fi
+
+          BRANCH="metrics/${STAMP}"
+          git switch -c "$BRANCH"
+          git add data/
+          git commit -m "Refresh community health metrics for ${STAMP}" \
+                     -m "Window ends ${WINDOW_END}. Collected by scripts/collect.py from public GitHub data using the workflow token. Metrics LFX Insights already publishes are linked rather than recomputed; spec adopters come from the curated data/adopters.json."
+          git push --force-with-lease -u origin "$BRANCH"
+
+          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+            echo "A pull request is already open for $BRANCH; pushed the update to it."
+            exit 0
+          fi
+
+          gh pr create \
+            --base "$GITHUB_REF_NAME" \
+            --head "$BRANCH" \
+            --title "Refresh community health metrics (${STAMP})" \
+            --body-file .github/pr-body-metrics.md
