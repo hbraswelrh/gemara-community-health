@@ -1,12 +1,12 @@
 # gemara-community-health
 
-Quarterly health reports for the [Gemara](https://github.com/gemaraproj) project —
-contributor intake, maintainer load, responsiveness, adoption, and visibility,
-pulled from GitHub and written up for maintainers and leadership.
+Quarterly health reports for [Gemara](https://github.com/gemaraproj) maintainers
+and project leadership. We use public GitHub data to see who is contributing,
+how long people wait for a reply, and where the project is being used.
 
-**Read the current report:** https://hbraswelrh.github.io/gemara-community-health/
+[Read the current report on GitHub Pages](https://hbraswelrh.github.io/gemara-community-health/).
 
-## What's here
+## Report files
 
 | File | What it is |
 |---|---|
@@ -16,16 +16,18 @@ pulled from GitHub and written up for maintainers and leadership.
 | `data/adopters.json` | Known spec and SDK adopters. Kept by hand. |
 | `scripts/` | The collector. |
 
-The HTML is a single self-contained file — no build step, no dependencies.
-Styles and the light/dark toggle are inline. Open it locally and it works.
+You can open `index.html` locally without building anything. The styles and
+light/dark toggle are included in the file. The report loads Sora and Courier
+Prime from `assets/fonts/`, so you can preview it without an internet connection.
 
-## How the numbers are produced
+## Collecting metrics
 
 `scripts/collect.py` pulls public data for every active `gemaraproj` repo over a
 rolling 90-day window and writes it to `data/metrics-YYYY-MM.json`. Archived
 repos are excluded and bot accounts are kept out of the human counts.
 
-It runs stdlib-only Python — nothing to install:
+The collector uses only the Python standard library. Run it with a token from
+your authenticated `gh` session:
 
 ```bash
 GH_TOKEN=$(gh auth token) python3 scripts/collect.py \
@@ -36,31 +38,25 @@ A monthly workflow (`.github/workflows/collect-metrics.yml`) runs the same
 command and opens a PR when the numbers move. It authenticates with the
 workflow's built-in `GITHUB_TOKEN`; there is no PAT to provision or rotate.
 
-The collector produces data, not prose. Someone still has to read the JSON and
-decide what the movement means.
+Before updating the report, read the JSON and check what changed and why.
 
-### What it deliberately leaves alone
+### LFX Insights and spec adoption
 
-**Anything LFX Insights already publishes.** Employer affiliation, who holds
-merge rights, meeting attendance, Scorecard results, contributor retention — LFX
-has access to data the GitHub API does not, so recomputing a worse version here
-would only put two different numbers for the same thing in front of the same
-reader. Those metrics come out under `lfx_insights.see_lfx_instead` as links into
-the dashboard, with no value attached.
+Use LFX Insights for employer affiliation, merge rights, meeting attendance,
+Scorecard results, and contributor retention. LFX has data the GitHub API
+does not expose, so the collector links to the dashboard under
+`lfx_insights.see_lfx_instead` rather than publishing a second set of numbers.
 
-One caveat worth knowing: LFX tracks a single repo from this org, still filed
-under the pre-rename `ossf/gemara` path. Figures there describe that repo, not
-the org.
+LFX tracks one Gemara repo under its old path, `ossf/gemara`. Its figures
+cover that repo alone.
 
-**Spec adopters.** Finding projects that use `security-insights.yml` without
-importing the Go SDK needs cross-org code search, and `GITHUB_TOKEN` cannot do
-that. Rather than add a PAT for it, the list lives in `data/adopters.json` and is
-labelled in the output as a floor rather than a total. Edit it when you learn
-about a new one.
+Finding projects that use `security-insights.yml` without importing the Go SDK
+takes cross-org code search, which `GITHUB_TOKEN` cannot do. We keep the known
+adopters in `data/adopters.json` instead of adding a personal access token.
+Add projects as you find them. The output labels this count as a lower bound.
 
-Each report also carries its own "Method and caveats" section with the exact
-window, exclusions, and known undercounts. Read that before quoting a number
-anywhere that matters.
+Before citing a number, check the report's "Method and caveats" section for
+the exact window, exclusions, and known undercounts.
 
 ## Tests
 

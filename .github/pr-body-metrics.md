@@ -1,31 +1,27 @@
-Automated refresh of the numbers behind the community health report.
-
-**This changes data, not prose.** Someone still has to read the JSON, decide
-what the movement means, and update the report and `index.html`.
+This refresh updates the metrics JSON. Review the changes before using the
+numbers to update the report and `index.html`.
 
 ### What was collected
 
-Public GitHub data for the `gemaraproj` org over a rolling window, using the
-workflow's built-in `GITHUB_TOKEN`. No personal access token involved.
+The workflow collected public GitHub data for `gemaraproj` over a rolling
+window. It used the built-in `GITHUB_TOKEN` and did not need a personal
+access token.
 
-### What was deliberately not collected
+### Metrics maintained elsewhere
 
-- **Anything LFX Insights publishes** — employer affiliation, merge rights,
-  meeting attendance, Scorecard, retention. These appear in the JSON under
-  `lfx_insights.see_lfx_instead` as links into the dashboard, with no value
-  attached. Publishing a second, worse number for a metric LFX already owns
-  would just give two answers to the same question.
-- **Spec adopters** — finding these needs cross-org code search, which
-  `GITHUB_TOKEN` cannot do. The list is curated by hand in
-  `data/adopters.json` and labelled in the output as a floor, not a total.
+Use the links under `lfx_insights.see_lfx_instead` for employer affiliation,
+merge rights, meeting attendance, Scorecard, and retention. LFX Insights has
+data the collector cannot get from GitHub.
+
+We maintain the list of known spec adopters in `data/adopters.json` because
+`GITHUB_TOKEN` cannot search code across organizations. The output labels
+the count as a lower bound.
 
 ### Reviewing
 
-Check `meta.window_start` and `meta.window_end` first, then skim the diff for
-counts that moved further than a month of activity would explain. A sharp jump
-usually means a repo was added, renamed, or un-archived rather than a real
-change in the community.
+Check `meta.window_start` and `meta.window_end` first. If a count changed more
+than you would expect in a month, check whether someone added, renamed, or
+unarchived a repo before reading it as a change in community activity.
 
-Counts drawn from GitHub's own totals (releases, open issues) include things a
-human reading the repo would not count — draft releases, for one. Treat them as
-directional.
+Use GitHub's totals for releases and open issues as a guide. For example,
+the release count can include drafts.
